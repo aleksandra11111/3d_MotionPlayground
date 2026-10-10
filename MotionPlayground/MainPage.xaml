@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MotionPlayground.ViewModels"
+             xmlns:urho="clr-namespace:Urho.Forms;assembly=UrhoSharp.Forms"
+             x:Name="RootPage"
+             x:Class="MotionPlayground.MainPage"
+             Title="Motion Playground"
+             BackgroundColor="{Binding PageBackground}"
+             Padding="0">
+
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- HERO HEADER -->
+        <Grid Grid.Row="0" Padding="18,18,18,12">
+            <Frame CornerRadius="26"
+                   HasShadow="True"
+                   Padding="16"
+                   BackgroundColor="{Binding Accent2}"
+                   Opacity="0.92">
+                <Grid RowSpacing="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Text="Motion Playground"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="White"/>
+
+                    <Label Grid.Row="1"
+                           Text="Анимации • Тема • Скорость"
+                           FontSize="13"
+                           TextColor="White"
+                           Opacity="0.9"/>
+
+                    <!-- маленькие “плашки” статуса -->
+                    <Grid Grid.Row="2" ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Frame CornerRadius="16" Padding="10,6" HasShadow="False"
+                               BackgroundColor="#000000" Opacity="0.25">
+                            <Label Text="{Binding SelectedTheme, StringFormat='Тема: {0}'}"
+                                   TextColor="White" FontSize="12"/>
+                        </Frame>
+
+                        <Frame Grid.Column="1" CornerRadius="16" Padding="10,6" HasShadow="False"
+                               BackgroundColor="#000000" Opacity="0.25">
+                            <Label Text="{Binding SpeedMultiplier, StringFormat='Скорость x{0:F1}'}"
+                                   TextColor="White" FontSize="12"/>
+                        </Frame>
+
+                        <Label Grid.Column="2"
+                               HorizontalTextAlignment="End"
+                               VerticalTextAlignment="Center"
+                               Text="{Binding SelectedAnimation.Name, StringFormat='Сейчас: {0}'}"
+                               TextColor="White"
+                               FontSize="12"
+                               Opacity="0.95"/>
+                    </Grid>
+                </Grid>
+            </Frame>
+        </Grid>
+
+        <!-- CONTENT -->
+        <ScrollView Grid.Row="1">
+            <Grid Padding="18,6,18,18" RowSpacing="14">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- STAGE CARD -->
+                <Frame x:Name="Stage"
+                       Grid.Row="0"
+                       CornerRadius="28"
+                       HasShadow="True"
+                       Padding="0">
+                    <Grid HeightRequest="320">
+                        <!-- glow -->
+                        <Frame CornerRadius="9999"
+                               HeightRequest="240"
+                               WidthRequest="240"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               BackgroundColor="{Binding Accent}"
+                               Opacity="0.18"
+                               HasShadow="False"/>
+
+                        <!-- urho surface -->
+                        <urho:UrhoSurface x:Name="UrhoView"
+                                          HorizontalOptions="Fill"
+                                          VerticalOptions="Fill" />
+
+                        <!-- corner badge -->
+                        <Frame CornerRadius="14"
+                               Padding="10,6"
+                               HasShadow="False"
+                               BackgroundColor="#0B1220"
+                               Opacity="0.82"
+                               HorizontalOptions="End"
+                               VerticalOptions="Start"
+                               Margin="12">
+                            <Label Text="{Binding SelectedAnimation.Key, StringFormat='anim: {0}'}"
+                                   FontSize="11"
+                                   TextColor="White"/>
+                        </Frame>
+                    </Grid>
+                </Frame>
+
+                <!-- CONTROLS CARD -->
+                <Frame Grid.Row="1" CornerRadius="22" HasShadow="True" Padding="14" BackgroundColor="#0B1220" Opacity="0.92">
+                    <Grid RowSpacing="10" ColumnSpacing="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.ColumnSpan="2"
+                               Text="Настройки"
+                               TextColor="White"
+                               FontAttributes="Bold"
+                               FontSize="14"/>
+
+                        <Picker Grid.Row="1" Grid.Column="0"
+                                Title="Тема"
+                                SelectedItem="{Binding SelectedTheme}"
+                                ItemsSource="{Binding Themes}"
+                                TextColor="White"/>
+
+                        <StackLayout Grid.Row="1" Grid.Column="1" Spacing="6">
+                            <Slider Minimum="0.5" Maximum="3" Value="{Binding SpeedMultiplier}"/>
+                            <Label Text="{Binding SpeedMultiplier, StringFormat='Скорость: x{0:F1}'}"
+                                   FontSize="12"
+                                   TextColor="White"
+                                   Opacity="0.9"/>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+
+                <!-- ANIMATIONS CARD -->
+                <Frame Grid.Row="2" CornerRadius="22" HasShadow="True" Padding="14" BackgroundColor="#0B1220" Opacity="0.92">
+                    <Grid RowSpacing="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Text="Анимации"
+                                   TextColor="White"
+                                   FontAttributes="Bold"
+                                   FontSize="14"/>
+
+                            <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                                <Switch IsToggled="{Binding CombineRotatePulse}"/>
+                                <Label Text="Rotate + Pulse"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="White"
+                                       Opacity="0.9"
+                                       FontSize="12"/>
+                            </StackLayout>
+                        </Grid>
+
+                        <CollectionView x:Name="AnimationsCV"
+                                        Grid.Row="1"
+                                        ItemsSource="{Binding Animations}"
+                                        SelectionMode="Single"
+                                        SelectedItem="{Binding SelectedAnimation, Mode=TwoWay}"
+                                        SelectionChanged="OnAnimationsSelectionChanged"
+                                        HeightRequest="92">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame CornerRadius="18"
+                                           Padding="12,10"
+                                           HasShadow="False"
+                                           BackgroundColor="#111827">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup Name="CommonStates">
+                                                <VisualState Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Opacity" Value="0.95"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState Name="Selected">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="BackgroundColor"
+                                                                Value="{Binding Source={x:Reference RootPage}, Path=BindingContext.Accent}"/>
+                                                        <Setter Property="Opacity" Value="1"/>
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+
+                                        <StackLayout Orientation="Horizontal" Spacing="10" VerticalOptions="Center">
+                                            <BoxView WidthRequest="14" HeightRequest="14" CornerRadius="7" Color="{Binding PreviewColor}"/>
+                                            <Label Text="{Binding Name}" TextColor="White" FontAttributes="Bold" FontSize="13"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                </Frame>
+
+                <!-- ACTIONS -->
+                <Grid Grid.Row="3" ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                            Text="Старт"
+                            Command="{Binding StartCommand}"
+                            CornerRadius="18"
+                            Padding="18,14"
+                            BackgroundColor="{Binding Accent}"
+                            TextColor="Black"
+                            FontAttributes="Bold"/>
+
+                    <Button Grid.Column="1"
+                            Text="Стоп"
+                            Command="{Binding StopCommand}"
+                            CornerRadius="18"
+                            Padding="18,14"
+                            BackgroundColor="#E5E7EB"
+                            TextColor="#0F172A"
+                            FontAttributes="Bold"/>
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotionPlayground.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Общие -->
+            <Color x:Key="White">#FFFFFF</Color>
+            <Color x:Key="Black">#000000</Color>
+
+
+            <!-- Тёмная тема -->
+            <Color x:Key="Dark.Bg">#0B1020</Color>
+            <Color x:Key="Dark.Fg">#E5E7EB</Color>
+            <Color x:Key="Dark.Accent">#60A5FA</Color>
+
+
+            <!-- Неоновая тема -->
+            <Color x:Key="Neon.Bg">#070711</Color>
+            <Color x:Key="Neon.Fg">#F8FAFC</Color>
+            <Color x:Key="Neon.Accent">#22D3EE</Color>
+            <Color x:Key="Neon.Accent2">#A78BFA</Color>
+
+
+            <!-- Пастельная тема -->
+            <Color x:Key="Pastel.Bg">#F7F7FB</Color>
+            <Color x:Key="Pastel.Fg">#1E293B</Color>
+            <Color x:Key="Pastel.Accent">#8BD3DD</Color>
+            <Color x:Key="Pastel.Accent2">#F6C2D9</Color>
+
+
+            <!-- Стили -->
+            <Style TargetType="ContentPage" x:Key="BasePageStyle">
+                <Setter Property="Padding" Value="20"/>
+            </Style>
+            <Style TargetType="Label" x:Key="H1">
+                <Setter Property="FontSize" Value="26"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,8,0,6"/>
+            </Style>
+            <Style TargetType="Label" x:Key="Caption">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Opacity" Value="0.8"/>
+            </Style>
+            <Style TargetType="Button" x:Key="Pill">
+                <Setter Property="CornerRadius" Value="18"/>
+                <Setter Property="Padding" Value="18,12"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<technique>
+  <pass name="base" blend="alpha" depthwrite="false">
+    <vertexshader name="Diffuse" />
+    <pixelshader name="Diffuse" />
+    <texture unit="diffuse" />
+  </pass>
+</technique>
